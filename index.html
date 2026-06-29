@@ -1,0 +1,204 @@
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+:root{
+  --green:#0F6E56;--green-light:#E1F5EE;--green-mid:#9FE1CB;
+  --gold:#C9A86A;--gold-light:#FDF3E3;
+  --cream:#FBF6EC;--cream-dark:#F0E9D8;
+  --text:#2C2C2A;--text-mid:#5F5E5A;--text-muted:#888780;
+  --border:#D3D1C7;--white:#fff;--radius:10px;
+}
+body,html{background:var(--cream);font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',sans-serif;color:var(--text);font-size:15px}
+.hdr{background:var(--green);padding:14px 16px 10px}
+.hdr-title{color:#fff;font-size:17px;font-weight:700}
+.hdr-date{color:rgba(255,255,255,.75);font-size:12px;margin-top:2px}
+.tabs{display:flex;background:var(--cream-dark);margin:10px 12px 0;border-radius:10px;padding:3px;gap:2px}
+.tab{flex:1;padding:8px 4px;border-radius:8px;border:none;background:transparent;font-size:11px;font-weight:700;color:var(--text-muted);cursor:pointer;text-align:center;line-height:1.4}
+.tab.active{background:var(--white);color:var(--green);box-shadow:0 1px 4px rgba(0,0,0,.1)}
+.main{padding:10px 12px 20px}
+.section{display:none}.section.active{display:block}
+.card{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:12px;margin-bottom:8px;position:relative}
+.card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:4px}
+.card-name{font-size:14px;font-weight:700;color:var(--text);flex:1}
+.badge{font-size:10px;padding:2px 8px;border-radius:20px;font-weight:700;white-space:nowrap}
+.b-red{background:#FEE2E2;color:#991B1B}.b-amber{background:#FEF3C7;color:#92400E}
+.b-green{background:var(--green-light);color:var(--green)}.b-gold{background:var(--gold-light);color:#7A5C1E}
+.meta{font-size:11px;color:var(--text-muted);display:flex;gap:8px;flex-wrap:wrap;margin-bottom:2px}
+.note{font-size:12px;color:var(--text-mid);border-left:3px solid var(--green-mid);padding-left:8px;margin-top:6px;line-height:1.5}
+.chips{display:flex;flex-wrap:wrap;gap:4px;margin-top:5px}
+.chip{font-size:10px;background:var(--gold-light);color:#7A5C1E;border-radius:20px;padding:2px 8px;font-weight:600}
+.del-btn{background:none;border:1px solid var(--border);color:var(--text-muted);font-size:11px;cursor:pointer;padding:2px 8px;border-radius:6px;margin-top:6px}
+.section-label{font-size:10px;font-weight:700;color:var(--text-muted);letter-spacing:.08em;text-transform:uppercase;margin:12px 0 6px;padding-bottom:4px;border-bottom:1px solid var(--border)}
+.empty{text-align:center;padding:24px 16px;color:var(--text-muted);font-size:13px}
+
+/* 新增表單 inline */
+.add-form{background:var(--white);border:1.5px solid var(--green-mid);border-radius:12px;padding:14px;margin-bottom:8px;display:none}
+.add-form.open{display:block}
+.form-row{margin-bottom:10px}
+.form-row label{display:block;font-size:10px;font-weight:700;color:var(--text-muted);margin-bottom:4px;text-transform:uppercase;letter-spacing:.04em}
+.form-row input,.form-row select,.form-row textarea{width:100%;font-size:14px;border-radius:8px;border:1px solid var(--border);padding:9px 10px;background:var(--cream);color:var(--text);-webkit-appearance:none;outline:none}
+.form-row input:focus,.form-row textarea:focus{border-color:var(--green);background:var(--white)}
+.form-row textarea{resize:none;height:60px;line-height:1.5}
+.form-row select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23888' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;padding-right:28px;background-color:var(--cream)}
+.btn-row{display:flex;gap:8px;margin-top:12px}
+.btn-save{flex:1;padding:10px;border-radius:8px;border:none;background:var(--green);color:#fff;font-size:14px;font-weight:700;cursor:pointer}
+.btn-cancel{padding:10px 14px;border-radius:8px;border:1px solid var(--border);background:var(--white);color:var(--text-mid);font-size:14px;cursor:pointer}
+.add-btn{width:100%;padding:11px;border-radius:10px;border:1.5px dashed var(--green-mid);background:transparent;color:var(--green);font-size:13px;font-weight:700;cursor:pointer;margin-top:2px}
+</style>
+
+<div class="hdr">
+  <div class="hdr-title">🌿 Fit21 行事曆</div>
+  <div class="hdr-date" id="today-date"></div>
+</div>
+
+<div class="tabs">
+  <button class="tab active" onclick="switchTab('clients',this)">👤 客戶服務</button>
+  <button class="tab" onclick="switchTab('events',this)">📅 公司活動</button>
+  <button class="tab" onclick="switchTab('reminders',this)">🔔 提醒事項</button>
+</div>
+
+<div class="main">
+
+  <!-- 客戶服務 -->
+  <div class="section active" id="sec-clients">
+    <div class="section-label">今日客戶服務</div>
+    <div id="client-list"></div>
+
+    <div class="add-form" id="form-client">
+      <div class="form-row"><label>客戶姓名</label><input id="c-name" placeholder="如：陳小姐"></div>
+      <div class="form-row"><label>服務需求</label><input id="c-need" placeholder="如：飲食計畫調整"></div>
+      <div class="form-row"><label>預約時間</label><input id="c-time" type="time" value="10:00"></div>
+      <div class="form-row"><label>狀態</label>
+        <select id="c-status">
+          <option value="ok">✅ 已確認</option>
+          <option value="normal" selected>📌 一般</option>
+          <option value="urgent">🔴 急需處理</option>
+        </select>
+      </div>
+      <div class="form-row"><label>備註</label><textarea id="c-note" placeholder="補充說明..."></textarea></div>
+      <div class="btn-row">
+        <button class="btn-cancel" onclick="closeForm('client')">取消</button>
+        <button class="btn-save" onclick="saveClient()">儲存</button>
+      </div>
+    </div>
+    <button class="add-btn" onclick="openForm('client')">＋ 新增客戶服務</button>
+  </div>
+
+  <!-- 公司活動 -->
+  <div class="section" id="sec-events">
+    <div class="section-label">公司活動安排</div>
+    <div id="event-list"></div>
+
+    <div class="add-form" id="form-event">
+      <div class="form-row"><label>活動名稱</label><input id="e-name" placeholder="如：月度體驗日"></div>
+      <div class="form-row"><label>日期</label><input id="e-date" type="date"></div>
+      <div class="form-row"><label>時間</label><input id="e-time" type="time" value="10:00"></div>
+      <div class="form-row"><label>邀請客戶姓名（每行一位）</label><textarea id="e-guests" placeholder="張美玲&#10;李佳倫&#10;陳雅婷"></textarea></div>
+      <div class="form-row"><label>活動備註</label><input id="e-note" placeholder="準備事項或特別說明"></div>
+      <div class="btn-row">
+        <button class="btn-cancel" onclick="closeForm('event')">取消</button>
+        <button class="btn-save" onclick="saveEvent()">儲存</button>
+      </div>
+    </div>
+    <button class="add-btn" onclick="openForm('event')">＋ 新增公司活動</button>
+  </div>
+
+  <!-- 提醒事項 -->
+  <div class="section" id="sec-reminders">
+    <div class="section-label">提醒事項</div>
+    <div id="reminder-list"></div>
+
+    <div class="add-form" id="form-reminder">
+      <div class="form-row"><label>提醒內容</label><input id="r-text" placeholder="如：更新 LINE 廣播"></div>
+      <div class="form-row"><label>提醒時間</label><input id="r-time" placeholder="如：週一 09:00"></div>
+      <div class="btn-row">
+        <button class="btn-cancel" onclick="closeForm('reminder')">取消</button>
+        <button class="btn-save" onclick="saveReminder()">儲存</button>
+      </div>
+    </div>
+    <button class="add-btn" onclick="openForm('reminder')">＋ 新增提醒</button>
+  </div>
+
+</div>
+
+<script>
+document.getElementById('today-date').textContent = new Date().toLocaleDateString('zh-TW',{year:'numeric',month:'long',day:'numeric',weekday:'long'});
+const STORE_KEY='fit21_cal_v2';
+let data=load();
+function load(){try{const s=localStorage.getItem(STORE_KEY);if(s)return JSON.parse(s);}catch(e){}return{clients:[],events:[],reminders:[]};}
+function save(){localStorage.setItem(STORE_KEY,JSON.stringify(data));}
+function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,5);}
+const statusMap={urgent:{label:'急需',cls:'b-red'},normal:{label:'一般',cls:'b-amber'},ok:{label:'已確認',cls:'b-green'}};
+function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+function renderClients(){
+  const el=document.getElementById('client-list');
+  if(!data.clients.length){el.innerHTML='<div class="empty">🌱 今日尚無客戶服務安排</div>';return;}
+  el.innerHTML=data.clients.map(c=>`<div class="card">
+    <div class="card-top"><div class="card-name">${esc(c.name)}</div><span class="badge ${statusMap[c.status]?.cls||'b-amber'}">${statusMap[c.status]?.label||'一般'}</span></div>
+    <div class="meta"><span>🕐 ${esc(c.time)}</span><span>📋 ${esc(c.need)}</span></div>
+    ${c.note?`<div class="note">${esc(c.note)}</div>`:''}
+    <button class="del-btn" onclick="del('clients','${c.id}')">刪除</button>
+  </div>`).join('');
+}
+function renderEvents(){
+  const el=document.getElementById('event-list');
+  if(!data.events.length){el.innerHTML='<div class="empty">📅 尚無公司活動安排</div>';return;}
+  el.innerHTML=data.events.map(e=>`<div class="card">
+    <div class="card-top"><div class="card-name">${esc(e.name)}</div><span class="badge b-gold">活動</span></div>
+    <div class="meta"><span>📅 ${esc(e.date)}</span><span>🕐 ${esc(e.time)}</span></div>
+    <div class="meta">👥 邀請 <strong>${e.guests.length}</strong> 位客戶</div>
+    ${e.guests.length?`<div class="chips">${e.guests.map(g=>`<span class="chip">${esc(g)}</span>`).join('')}</div>`:''}
+    ${e.note?`<div class="note">${esc(e.note)}</div>`:''}
+    <button class="del-btn" onclick="del('events','${e.id}')">刪除</button>
+  </div>`).join('');
+}
+function renderReminders(){
+  const el=document.getElementById('reminder-list');
+  if(!data.reminders.length){el.innerHTML='<div class="empty">🔔 尚無提醒事項</div>';return;}
+  el.innerHTML=data.reminders.map(r=>`<div class="card">
+    <div class="card-name" style="font-size:13px">${esc(r.text)}</div>
+    <div class="meta" style="margin-top:5px">🕐 ${esc(r.time)}</div>
+    <button class="del-btn" onclick="del('reminders','${r.id}')">刪除</button>
+  </div>`).join('');
+}
+function renderAll(){renderClients();renderEvents();renderReminders();}
+function del(type,id){data[type]=data[type].filter(x=>x.id!==id);save();renderAll();}
+
+function switchTab(t,btn){
+  document.querySelectorAll('.tab').forEach(el=>el.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.getElementById('sec-'+t).classList.add('active');
+}
+
+function openForm(t){
+  document.querySelectorAll('.add-form').forEach(f=>f.classList.remove('open'));
+  document.getElementById('form-'+t).classList.add('open');
+}
+function closeForm(t){document.getElementById('form-'+t).classList.remove('open');}
+
+function saveClient(){
+  const name=document.getElementById('c-name').value.trim();
+  if(!name){alert('請輸入客戶姓名');return;}
+  data.clients.push({id:uid(),name,need:document.getElementById('c-need').value||'待確認',time:document.getElementById('c-time').value,status:document.getElementById('c-status').value,note:document.getElementById('c-note').value});
+  save();renderClients();closeForm('client');
+  document.getElementById('c-name').value='';document.getElementById('c-need').value='';document.getElementById('c-note').value='';
+}
+function saveEvent(){
+  const name=document.getElementById('e-name').value.trim();
+  if(!name){alert('請輸入活動名稱');return;}
+  const raw=document.getElementById('e-guests').value;
+  const guests=raw?raw.split('\n').map(s=>s.trim()).filter(Boolean):[];
+  data.events.push({id:uid(),name,date:document.getElementById('e-date').value,time:document.getElementById('e-time').value,guests,note:document.getElementById('e-note').value});
+  save();renderEvents();closeForm('event');
+  document.getElementById('e-name').value='';document.getElementById('e-guests').value='';document.getElementById('e-note').value='';
+}
+function saveReminder(){
+  const text=document.getElementById('r-text').value.trim();
+  if(!text){alert('請輸入提醒內容');return;}
+  data.reminders.push({id:uid(),text,time:document.getElementById('r-time').value||'待定'});
+  save();renderReminders();closeForm('reminder');
+  document.getElementById('r-text').value='';document.getElementById('r-time').value='';
+}
+renderAll();
+</script>
