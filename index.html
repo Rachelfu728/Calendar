@@ -7,42 +7,42 @@
   --text:#2C2C2A;--text-mid:#5F5E5A;--text-muted:#888780;
   --border:#D3D1C7;--white:#fff;--radius:10px;
 }
-body,html{background:var(--cream);font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',sans-serif;color:var(--text);font-size:15px}
+body,html{background:var(--cream);font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',sans-serif;color:var(--text);font-size:18px}
 .hdr{background:var(--green);padding:14px 16px 10px}
 .hdr-title{color:#fff;font-size:17px;font-weight:700}
-.hdr-date{color:rgba(255,255,255,.75);font-size:12px;margin-top:2px}
+.hdr-date{color:rgba(255,255,255,.75);font-size:15px;margin-top:2px}
 .tabs{display:flex;background:var(--cream-dark);margin:10px 12px 0;border-radius:10px;padding:3px;gap:2px}
-.tab{flex:1;padding:8px 4px;border-radius:8px;border:none;background:transparent;font-size:11px;font-weight:700;color:var(--text-muted);cursor:pointer;text-align:center;line-height:1.4}
+.tab{flex:1;padding:12px 4px;border-radius:8px;border:none;background:transparent;font-size:17px;font-weight:700;color:var(--text-muted);cursor:pointer;text-align:center;line-height:1.4}
 .tab.active{background:var(--white);color:var(--green);box-shadow:0 1px 4px rgba(0,0,0,.1)}
 .main{padding:10px 12px 20px}
 .section{display:none}.section.active{display:block}
-.card{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:12px;margin-bottom:8px;position:relative}
+.card{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:12px;margin-bottom:12px;position:relative}
 .card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:4px}
-.card-name{font-size:14px;font-weight:700;color:var(--text);flex:1}
-.badge{font-size:10px;padding:2px 8px;border-radius:20px;font-weight:700;white-space:nowrap}
+.card-name{font-size:17px;font-weight:700;color:var(--text);flex:1}
+.badge{font-size:13px;padding:2px 8px;border-radius:20px;font-weight:700;white-space:nowrap}
 .b-red{background:#FEE2E2;color:#991B1B}.b-amber{background:#FEF3C7;color:#92400E}
 .b-green{background:var(--green-light);color:var(--green)}.b-gold{background:var(--gold-light);color:#7A5C1E}
-.meta{font-size:11px;color:var(--text-muted);display:flex;gap:8px;flex-wrap:wrap;margin-bottom:2px}
-.note{font-size:12px;color:var(--text-mid);border-left:3px solid var(--green-mid);padding-left:8px;margin-top:6px;line-height:1.5}
+.meta{font-size:17px;color:var(--text-muted);display:flex;gap:8px;flex-wrap:wrap;margin-bottom:2px}
+.note{font-size:15px;color:var(--text-mid);border-left:3px solid var(--green-mid);padding-left:8px;margin-top:6px;line-height:1.5}
 .chips{display:flex;flex-wrap:wrap;gap:4px;margin-top:5px}
-.chip{font-size:10px;background:var(--gold-light);color:#7A5C1E;border-radius:20px;padding:2px 8px;font-weight:600}
-.del-btn{background:none;border:1px solid var(--border);color:var(--text-muted);font-size:11px;cursor:pointer;padding:2px 8px;border-radius:6px;margin-top:6px}
-.section-label{font-size:10px;font-weight:700;color:var(--text-muted);letter-spacing:.08em;text-transform:uppercase;margin:12px 0 6px;padding-bottom:4px;border-bottom:1px solid var(--border)}
-.empty{text-align:center;padding:24px 16px;color:var(--text-muted);font-size:13px}
+.chip{font-size:13px;background:var(--gold-light);color:#7A5C1E;border-radius:20px;padding:2px 8px;font-weight:600}
+.del-btn{background:none;border:1px solid var(--border);color:var(--text-muted);font-size:17px;cursor:pointer;padding:2px 8px;border-radius:6px;margin-top:6px}
+.section-label{font-size:13px;font-weight:700;color:var(--text-muted);letter-spacing:.08em;text-transform:uppercase;margin:12px 0 6px;padding-bottom:4px;border-bottom:1px solid var(--border)}
+.empty{text-align:center;padding:24px 16px;color:var(--text-muted);font-size:16px}
 
 /* 新增表單 inline */
-.add-form{background:var(--white);border:1.5px solid var(--green-mid);border-radius:12px;padding:14px;margin-bottom:8px;display:none}
+.add-form{background:var(--white);border:1.5px solid var(--green-mid);border-radius:12px;padding:14px;margin-bottom:12px;display:none}
 .add-form.open{display:block}
 .form-row{margin-bottom:10px}
-.form-row label{display:block;font-size:10px;font-weight:700;color:var(--text-muted);margin-bottom:4px;text-transform:uppercase;letter-spacing:.04em}
-.form-row input,.form-row select,.form-row textarea{width:100%;font-size:14px;border-radius:8px;border:1px solid var(--border);padding:9px 10px;background:var(--cream);color:var(--text);-webkit-appearance:none;outline:none}
+.form-row label{display:block;font-size:13px;font-weight:700;color:var(--text-muted);margin-bottom:4px;text-transform:uppercase;letter-spacing:.04em}
+.form-row input,.form-row select,.form-row textarea{width:100%;font-size:17px;border-radius:8px;border:1px solid var(--border);padding:13px 12px;background:var(--cream);color:var(--text);-webkit-appearance:none;outline:none}
 .form-row input:focus,.form-row textarea:focus{border-color:var(--green);background:var(--white)}
 .form-row textarea{resize:none;height:60px;line-height:1.5}
 .form-row select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23888' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;padding-right:28px;background-color:var(--cream)}
 .btn-row{display:flex;gap:8px;margin-top:12px}
-.btn-save{flex:1;padding:10px;border-radius:8px;border:none;background:var(--green);color:#fff;font-size:14px;font-weight:700;cursor:pointer}
-.btn-cancel{padding:10px 14px;border-radius:8px;border:1px solid var(--border);background:var(--white);color:var(--text-mid);font-size:14px;cursor:pointer}
-.add-btn{width:100%;padding:11px;border-radius:10px;border:1.5px dashed var(--green-mid);background:transparent;color:var(--green);font-size:13px;font-weight:700;cursor:pointer;margin-top:2px}
+.btn-save{flex:1;padding:10px;border-radius:8px;border:none;background:var(--green);color:#fff;font-size:17px;font-weight:700;cursor:pointer}
+.btn-cancel{padding:10px 14px;border-radius:8px;border:1px solid var(--border);background:var(--white);color:var(--text-mid);font-size:17px;cursor:pointer}
+.add-btn{width:100%;padding:11px;border-radius:10px;border:1.5px dashed var(--green-mid);background:transparent;color:var(--green);font-size:16px;font-weight:700;cursor:pointer;margin-top:2px}
 </style>
 
 <div class="hdr">
@@ -156,7 +156,7 @@ function renderReminders(){
   const el=document.getElementById('reminder-list');
   if(!data.reminders.length){el.innerHTML='<div class="empty">🔔 尚無提醒事項</div>';return;}
   el.innerHTML=data.reminders.map(r=>`<div class="card">
-    <div class="card-name" style="font-size:13px">${esc(r.text)}</div>
+    <div class="card-name" style="font-size:16px">${esc(r.text)}</div>
     <div class="meta" style="margin-top:5px">🕐 ${esc(r.time)}</div>
     <button class="del-btn" onclick="del('reminders','${r.id}')">刪除</button>
   </div>`).join('');
